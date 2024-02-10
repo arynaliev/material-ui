@@ -36,6 +36,7 @@ function App() {
         width: "100%",
         height: "100vh",
         display: "flex",
+        gap: 2,
         flexDirection: "column",
         // justifyContent: "center",
         alignItems: "center",
@@ -56,7 +57,11 @@ function App() {
           </Button>
         </Paper>
       </Box>
-      <TodoItem />
+      <Box>
+        {todoList.map((el, index) => (
+          <TodoItem key={index} text={el.item} id={el.id} />
+        ))}
+      </Box>
     </Container>
   );
 }

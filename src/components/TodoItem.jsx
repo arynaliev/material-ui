@@ -5,7 +5,14 @@ import React from "react";
 const TodoItem = ({ text, id }) => {
   return (
     <Paper
-      sx={{ width: "50%", display: "flex", justifyContent: "space-between" }}
+      elevation={5}
+      sx={{
+        textAlign: "center",
+        width: "100%",
+        px: 1,
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
       <Input type="checkbox" />
       <Typography variant="p" sx={{ fontWeight: "bold" }}>
