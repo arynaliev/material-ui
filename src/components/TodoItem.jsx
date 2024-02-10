@@ -1,6 +1,6 @@
 import { Delete } from "@mui/icons-material";
 import { Box, IconButton, Input, Paper, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const TodoItem = ({ text, id, handleDelete, isChecked, completeTodo }) => {
   return (
