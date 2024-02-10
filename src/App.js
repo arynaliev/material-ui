@@ -3,19 +3,67 @@ import {
   Box,
   Button,
   Container,
+  Input,
   Paper,
-  Stack,
   Typography,
 } from "@mui/material";
 
 import { Delete } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-
-const userList = ["Samsung", "Iphone", "Xiaomi"];
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import TodoItem from "./components/TodoItem";
 
 function App() {
+  const [todoList, setTodoList] = useState([]);
+  const [todo, setTodo] = useState({ item: "", id: "" });
+
+  function handleChange(e) {
+    setTodo({ item: e.target.value, id: uuidv4() });
+    console.log(todo);
+  }
+
+  function handleClick() {
+    setTodoList([...todoList, todo]);
+    setTodo({ item: "", id: "" });
+    console.log("list: ", todoList);
+    console.log("todo: ", todo);
+  }
+
   return (
-    <Container>
+    <Container
+      sx={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h3">Todo List</Typography>
+
+      <Box>
+        <Paper sx={{ py: 1, px: 3, display: "flex", gap: 2 }} elevation={10}>
+          <Input
+            value={todo.item}
+            placeholder="add plan todo"
+            onChange={handleChange}
+            required
+          ></Input>
+          <Button variant="contained" onClick={handleClick}>
+            Add
+          </Button>
+        </Paper>
+      </Box>
+      <TodoItem />
+    </Container>
+  );
+}
+
+export default App;
+
+/*<Container>
       <Typography variant="h1">h1. Header</Typography>
       <Typography variant="h2">h2. Header</Typography>
       <Typography variant="h3" mb={3}>
@@ -44,8 +92,4 @@ function App() {
           );
         })}
       </Box>
-    </Container>
-  );
-}
-
-export default App;
+    </Container>*/
