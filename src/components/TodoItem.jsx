@@ -1,24 +1,39 @@
 import { Delete } from "@mui/icons-material";
-import { IconButton, Input, Paper, Typography } from "@mui/material";
-import React from "react";
+import { Box, IconButton, Input, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
 
-const TodoItem = ({ text, id }) => {
+const TodoItem = ({ text, id, handleDelete, isChecked, completeTodo }) => {
   return (
     <Paper
       elevation={5}
       sx={{
-        textAlign: "center",
         width: "100%",
-        px: 1,
+        pl: 2,
         display: "flex",
+        alignItems: "center",
         justifyContent: "space-between",
       }}
     >
-      <Input type="checkbox" />
-      <Typography variant="p" sx={{ fontWeight: "bold" }}>
-        {text}
-      </Typography>
-      <IconButton color="primary" aria-label="delete">
+      <Input
+        type="checkbox"
+        checked={isChecked}
+        sx={{ marginRight: 2 }}
+        onChange={() => completeTodo(id)}
+      />
+      <Box sx={{ textAlign: "start" }}>
+        <Typography
+          sx={{ textDecoration: `${isChecked ? "line-through" : "none"}` }}
+          variant="p"
+        >
+          {text}
+        </Typography>
+      </Box>
+      <IconButton
+        onClick={() => handleDelete(id)}
+        sx={{ marginLeft: 1 }}
+        color="primary"
+        aria-label="delete"
+      >
         <Delete />
       </IconButton>
     </Paper>

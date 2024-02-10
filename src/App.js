@@ -10,7 +10,7 @@ import {
 
 import { Delete } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TodoItem from "./components/TodoItem";
 
@@ -24,10 +24,24 @@ function App() {
   }
 
   function handleClick() {
-    setTodoList([...todoList, todo]);
-    setTodo({ item: "", id: "" });
+    if (todo.item) {
+      setTodoList([...todoList, todo]);
+      setTodo({ item: "", id: "" });
+    }
     console.log("list: ", todoList);
     console.log("todo: ", todo);
+  }
+
+  function completeTodo(id) {
+    setTodoList([
+      ...todoList.map((el) =>
+        el.id === id ? { ...el, isChecked: !el.isChecked } : el
+      ),
+    ]);
+  }
+
+  function handleDelete(id) {
+    setTodoList([...todoList.filter((el) => el.id !== id)]);
   }
 
   return (
@@ -38,7 +52,6 @@ function App() {
         display: "flex",
         gap: 2,
         flexDirection: "column",
-        // justifyContent: "center",
         alignItems: "center",
       }}
     >
@@ -50,16 +63,24 @@ function App() {
             value={todo.item}
             placeholder="add plan todo"
             onChange={handleChange}
-            required
           ></Input>
           <Button variant="contained" onClick={handleClick}>
             Add
           </Button>
         </Paper>
       </Box>
-      <Box>
+      <Box
+        sx={{ width: "50%", display: "flex", flexDirection: "column", gap: 1 }}
+      >
         {todoList.map((el, index) => (
-          <TodoItem key={index} text={el.item} id={el.id} />
+          <TodoItem
+            key={index}
+            text={el.item}
+            id={el.id}
+            isChecked={el.isChecked}
+            handleDelete={handleDelete}
+            completeTodo={completeTodo}
+          />
         ))}
       </Box>
     </Container>
